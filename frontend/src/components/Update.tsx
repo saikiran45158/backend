@@ -1,10 +1,12 @@
 import { JSX, useRef, useState } from "react";
+import '../styles/components.styles.css'
 import { EmpObjectType } from "../types/employee.types";
 import EmployeeObject from "../services/employeeService";
 import React from "react";
 import Error from "./Error";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { boxStyle } from "../styles/componentStyles";
 
 export default function Update(props: { id: number; }): JSX.Element {
     // const eid = useRef<HTMLInputElement>(null);
@@ -23,7 +25,6 @@ export default function Update(props: { id: number; }): JSX.Element {
         edesig.current!.value = ''
         edept.current!.value = ''
         esal.current!.value = ''
-
         ename.current!.value = EmpData.EmpName!
         edesig.current!.value = EmpData.EmpDesig!
         edept.current!.value = EmpData.EmpDept!
@@ -42,7 +43,8 @@ export default function Update(props: { id: number; }): JSX.Element {
             }
         }
     }
-    fetchUserData(props.id)
+    if(props.id>0)
+        fetchUserData(props.id)
     async function handleSubmit(eve: React.FormEvent) {
         eve.preventDefault();
         if (!ename.current || !edesig.current || !edept.current || !esal.current) {
@@ -83,9 +85,8 @@ export default function Update(props: { id: number; }): JSX.Element {
     }
 
     return (
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "3%" }}>
-
-            <form onSubmit={handleSubmit} style={{ width: 'auto', display: 'flex', flexDirection: 'column', alignItems: "center", gap: '10px' }}>
+        <Box sx={boxStyle}>
+            <form onSubmit={handleSubmit} className="form">
                 <Error errorMsg={error}></Error>
                 <TextField required label='Enter Name' inputRef={ename}></TextField>
                 <TextField required label='Enter Designation' inputRef={edesig}></TextField>
@@ -93,7 +94,7 @@ export default function Update(props: { id: number; }): JSX.Element {
                 <TextField required label='Enter Salary' type="number" inputRef={esal}></TextField>
                 <Button type='submit' variant='contained'>Update</Button>
             </form>
-        </div>
+        </Box>
     );
 }
 

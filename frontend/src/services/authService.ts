@@ -5,7 +5,7 @@ export default async  function authenticate(data:userType){
     const logina=`${process.env.HOST}/login`
     try{
         const receivedResponse=await axios.post(logina,data)
-        let token:string=receivedResponse.data.token
+        const token:string=receivedResponse.data.token
         localStorage.setItem('token',token)
         return true
     }
@@ -15,7 +15,7 @@ export default async  function authenticate(data:userType){
                 throw new Error('incorrect username or password')
             else{
                 throw new Error(`server down wait for some time`)
-                console.log(err)
+                //console.log(err)
             }
         }
         throw new Error('unexpected error occurs')

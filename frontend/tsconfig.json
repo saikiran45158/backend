@@ -3,5 +3,10 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx", // Ensures JSX works without the need to import React
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  }
 }

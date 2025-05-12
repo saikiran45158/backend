@@ -1,20 +1,24 @@
 import { JSX, useEffect, useState } from "react"
 import { EmpObjectType } from "../types/employee.types"
 import EmployeeObject from "../services/employeeService"
-import { Add, Delete, Edit } from "@mui/icons-material"
+import { Add } from "@mui/icons-material"
 import '../styles/components.styles.css'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Fab, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import Update from "./Update"
-import AddEmp from "./AddEmp"
+import { boxStyle, tableContainerStyle } from "../styles/componentStyles"
+import { Box, Button, Fab, Paper, TableContainer } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
+import EmployeeTable from "./EmployeeTable"
+import Dialogs from "./Dialogs"
+import MyPagination from "./MyPagination"
 
 export default function Home(): JSX.Element {
     const [UpdateDialog, setUpdateDialog] = useState(false)
     const [AddDialog, setAddDialog] = useState(false)
-    const [editId, setEditId] = useState(0)
+    const [editId, setEditId] = useState(0)   
     const [employees, setEmployees] = useState<EmpObjectType[]>([])
     const [deleteDialog, setDeleteDialog] = useState(false)
     const [deleteId, setDeleteId] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
+    const employeesPerPage = 5
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,18 +30,23 @@ export default function Home(): JSX.Element {
             catch (err) {
                 if (typeof err === 'object') {
                     const errMsg = (err as { message: string }).message
-                    if(errMsg.localeCompare('session expired please relogin')===0){
+                    if (errMsg.localeCompare('session expired please relogin') === 0) {
                         window.alert(errMsg)
                         navigate('/')
                     }
-                    else
+                    else{
                         window.alert(errMsg);
+                    }
                 }
             }
         }
         allEmployees()
 
-    }, [UpdateDialog, AddDialog, deleteId])
+    }, [UpdateDialog, AddDialog, deleteId, currentPage, employeesPerPage,navigate])
+
+    const endIndex: number = employeesPerPage * currentPage
+    const startIndex: number = endIndex - employeesPerPage
+    const currentEmployees = employees.slice(startIndex, endIndex)
 
     function handleEdit(id: number): void {
         setUpdateDialog(true)
@@ -54,8 +63,7 @@ export default function Home(): JSX.Element {
         catch (err) {
             if (typeof err === 'object') {
                 const errMsg = (err as { message: string }).message
-               // console.log('-->',errMsg)
-                if(errMsg.localeCompare('session expired please relogin')===0){
+                if (errMsg.localeCompare('session expired please relogin') === 0) {
                     window.alert(errMsg)
                     navigate('/')
                 }
@@ -70,11 +78,11 @@ export default function Home(): JSX.Element {
         setDeleteId(id)
     }
 
-    function handleEditBack(): void {
+    function handleEditDialogBack(): void {
         setUpdateDialog(false)
     }
 
-    function handleAddBack(): void {
+    function handleAddDialogBack(): void {
         setAddDialog(false)
     }
 
@@ -83,82 +91,36 @@ export default function Home(): JSX.Element {
     }
 
     function handleLogOut(): void {
+        console.log()
         localStorage.clear();
         navigate('/');
     }
 
     return (
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={boxStyle}>
             <div className="nav-class">
                 <Link to='/home'><h2>Employees</h2></Link>
-                <button onClick={handleLogOut} id="logout-btn" style={{ border: 'none', color: 'white', backgroundColor: 'rgb(158, 101, 101)', fontSize: 'large' }}>Logout</button>
-            </div>
 
+                <Button onClick={handleLogOut} sx={{ color: 'white' }}>logout</Button>
+            </div>
             <p>
                 <Fab onClick={handleAddEmployee}><Add /></Fab>
             </p>
-            <TableContainer sx={{ width: '50%', minWidth: 700 }} component={Paper}>
-                <Table sx={{ border: '2px solid black', marginTop: '3%' }}>
-                    <TableHead >
-                        <TableRow sx={{ backgroundColor: "#f5f5f5", fontWeight: "bold" }}>
-                            <TableCell sx={{ fontWeight: "bold" }}>EmployeeId</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }}>EmployeeName</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }}>Designation</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }}>Department</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }}>Salary</TableCell>
-                            <TableCell sx={{ fontWeight: "bold" }}>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            employees?.map((employee, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>{employee.EmpId}</TableCell>
-                                    <TableCell>{employee.EmpName}</TableCell>
-                                    <TableCell>{employee.EmpDesig}</TableCell>
-                                    <TableCell>{employee.EmpDept}</TableCell>
-                                    <TableCell>{employee.EmpSal}</TableCell>
-                                    <TableCell>
-                                        <IconButton color='primary' onClick={() => handleEdit(employee.EmpId)}><Edit /></IconButton>
-                                        <IconButton color='error' onClick={() => handleDelete(employee.EmpId)}><Delete /></IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        }
-                    </TableBody>
-                </Table>
+
+            <TableContainer sx={tableContainerStyle} component={Paper}>
+                {
+
+                    employees.length === 0 ? (<h3>No Employees Found ,Add Some Employees</h3>) : (<EmployeeTable employees={currentEmployees} handleEdit={handleEdit} handleDelete={handleDelete} />)
+
+                }
+                <MyPagination employeesSize={employees.length} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
             </TableContainer>
-            <Dialog open={AddDialog}>
-                <DialogTitle>Add Employee</DialogTitle>
-                <DialogContent>
-                    <AddEmp />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleAddBack}>Back</Button>
-                </DialogActions>
-            </Dialog>
 
-            <Dialog open={UpdateDialog}>
-                <DialogTitle>Update Employee</DialogTitle>
-                <DialogContent>
-                    <Update id={editId} />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleEditBack}>Back</Button>
-                </DialogActions>
-            </Dialog>
+            <Dialogs AddDialog={AddDialog} handleAddDialogBack={handleAddDialogBack} UpdateDialog={UpdateDialog}
+                editId={editId} handleEditDialogBack={handleEditDialogBack} deleteDialog={deleteDialog} setDeleteDialog={setDeleteDialog}
+                handleOk={handleOk} />
 
-            <Dialog open={deleteDialog}>
-                <DialogContent>
-                    Do you want to delete this employee
-                </DialogContent>
-                <DialogActions sx={{ width: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <Button onClick={() => setDeleteDialog(false)}>cancel</Button>
-                    <Button onClick={handleOk}>confirm</Button>
-                </DialogActions>
-            </Dialog>
-
-        </div>
+        </Box>
     )
 }
-

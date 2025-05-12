@@ -13,22 +13,21 @@ class Employee {
                     , withCredentials: true
                 })
             const msg: MsgType = receivedResponse.data
-            return window.alert(msg['msg'])
+            window.alert(msg['msg'])
+            return true
         }
         catch (err) {
             if (err instanceof AxiosError) {
-                if(err.response?.status === 409){
+                if (err.response?.status === 409) {
                     //console.log('->', err.response?.status)
                     throw Error('id already exist')
                 }
-                else if(err.response?.status===401)
-                        throw new Error('session expired please relogin')
-                    throw new Error('server down wait for some time')
-                
+                else if (err.response?.status === 401)
+                    throw new Error('session expired please relogin')
+                throw new Error('server down wait for some time')
+
             }
         }
-
-
     }
     async getEmployee(EmpId: number): Promise<Partial<EmpObjectType>> {
         try {
@@ -42,8 +41,8 @@ class Employee {
             return result[0]
         }
         catch (err) {
-            if(axios.isAxiosError(err)){
-                if(err.response?.status===401)
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401)
                     throw new Error('session expired please relogin')
             }
             throw new Error('server down wait for some time')
@@ -59,8 +58,8 @@ class Employee {
             return result
         }
         catch (err) {
-            if(axios.isAxiosError(err)){
-                if(err.response?.status===401)
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401)
                     throw new Error('session expired please relogin')
             }
             throw new Error('server down wait for some time')
@@ -75,11 +74,12 @@ class Employee {
                     }
                 })
             const msg: MsgType = receivedResponse.data
-            return window.alert(msg['msg'])
+            window.alert(msg['msg'])
+            return msg['msg']
         }
         catch (err) {
-            if(axios.isAxiosError(err)){
-                if(err.response?.status===401)
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401)
                     throw new Error('session expired please relogin')
             }
             throw new Error('server down wait for some time')
@@ -97,8 +97,8 @@ class Employee {
             return msg
         }
         catch (err) {
-            if(axios.isAxiosError(err)){
-                if(err.response?.status===401)
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401)
                     throw new Error('session expired please relogin')
             }
             throw new Error('server down wait for some time')
@@ -108,6 +108,5 @@ class Employee {
 }
 const EmployeeObject = new Employee()
 export default EmployeeObject
-
 
 
