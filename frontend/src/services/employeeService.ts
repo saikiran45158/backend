@@ -35,7 +35,6 @@ class Employee {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             const result: EmpObjectType[] = receivedResponse.data
-            // console.log(result[0])
             if (result.length === 0)
                 window.alert('user not found')
             return result[0]
@@ -54,7 +53,6 @@ class Employee {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             const result: EmpObjectType[] = receivedResponse.data
-            //console.log(result)
             return result
         }
         catch (err) {

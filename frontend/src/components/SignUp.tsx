@@ -1,11 +1,11 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 //import '../styles/components.styles.css'
 import { useRef, useState } from "react";
 import { userType } from "../types/user.types";
 import { signup } from "../services/signupService";
 import { useNavigate } from "react-router-dom";
 import Error from "./Error";
-import { LoginStyle } from "../styles/componentStyles";
+import { fromStyle, LoginStyle } from "../styles/componentStyles";
 
 export default function SignUp() {
     const userRef = useRef<HTMLInputElement>(null)
@@ -35,14 +35,14 @@ export default function SignUp() {
     return (
         <Box sx={LoginStyle}>
             <Box>
-                <form onSubmit={handleSubmit} className="form">
-                    <h2>SignUp</h2>
+                <Box component='form' onSubmit={handleSubmit} sx={fromStyle}>
+                    <Typography component='h2'>SignUp</Typography>
                     <Error errorMsg={error} />
                     <TextField inputRef={userRef} type='text' required label='Enter username'></TextField>
                     <TextField inputRef={passRef} type='password' required label='Enter password'></TextField>
                     <Button variant='contained' type='submit'>Sign Up</Button>
-                    <span>Have an account ?<Button onClick={() => navigate('/')}  variant='text'>login</Button></span>
-                </form>
+                    <Typography component='span'>Have an account ?<Button onClick={() => navigate('/')}  variant='text'>login</Button></Typography>
+                </Box>
             </Box>
         </Box>
     )

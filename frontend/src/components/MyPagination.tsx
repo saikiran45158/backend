@@ -1,5 +1,5 @@
-import { Button } from '@mui/material'
-import '../styles/pagination.styles.css'
+import { Box, Button } from '@mui/material'
+import { activeButtonStyle, paginationStyle } from '../styles/paginationStyles'
 
 interface MyPaginationProps {
     employeesSize: number,
@@ -13,13 +13,15 @@ function MyPagination({ employeesSize,currentPage, setCurrentPage }: MyPaginatio
     for (let i = 1; i <= Math.ceil(employeesSize / 5); i++)
         pages.push(i)
     return (
-        <div className='pagination'>
+        <Box component='div' sx={paginationStyle}>
             {
                 pages.map((page, index) => (
-                    <Button key={index} className={page==currentPage?'active':''} onClick={() => setCurrentPage(page)}>{page}</Button>
+                    <Button key={index} sx={{
+                        ...(page === currentPage ? activeButtonStyle : {})
+                      }} onClick={() => setCurrentPage(page)}>{page}</Button>
                 ))
             }
-        </div>
+        </Box>
     )
 }
 

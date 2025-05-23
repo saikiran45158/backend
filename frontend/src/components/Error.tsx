@@ -1,10 +1,12 @@
+import { Box, Typography } from "@mui/material"
+
 type err={
     errorMsg:string
 }
 export default function Error(props:err){
     return (
-        <div>
-            <span style={{color:'red'}}>{props.errorMsg}</span>
-        </div>
+        <Box>
+            <Typography sx={{color:'red'}} component='span'>{props.errorMsg}</Typography>
+        </Box>
     )
 }
