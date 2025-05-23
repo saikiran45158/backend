@@ -2,9 +2,8 @@ import { useRef, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import Error from "./Error";
 import authenticate from "../services/authService";
-import { Box, Button, TextField } from "@mui/material";
-import { LoginStyle } from "../styles/componentStyles";
-import '../styles/components.styles.css'
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { fromStyle, LoginStyle } from "../styles/componentStyles";
 
 export default function Login() {
     const navigate: NavigateFunction = useNavigate()
@@ -37,14 +36,14 @@ export default function Login() {
     return (
         <Box sx={LoginStyle}>
             <Box>
-                <form id='login-form' onSubmit={handleSubmit} className="form">
-                    <h2>Login</h2>
+                <Box component='form' onSubmit={handleSubmit} sx={fromStyle}>
+                    <Typography component='h6'>Login</Typography>
                     <Error errorMsg={error}></Error>
                     <TextField label='UserName' required inputRef={user} type="text" placeholder='enter username'></TextField>
                     <TextField label='Password' required inputRef={password} type="password" placeholder="enter password"></TextField>
                     <Button variant='contained' type="submit">login</Button>
-                    <span>Don't have an account ?<Button onClick={() => navigate('/signup')} variant='text'>signup</Button></span>
-                </form>
+                    <Typography component='span'>Don't have an account ?<Button onClick={() => navigate('/signup')} variant='text'>signup</Button></Typography>
+                </Box>
             </Box>
         </Box>
     )

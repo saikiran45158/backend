@@ -1,12 +1,11 @@
 import { JSX, useRef, useState } from "react";
-import '../styles/components.styles.css'
 import { EmpObjectType } from "../types/employee.types";
 import EmployeeObject from "../services/employeeService";
 import React from "react";
 import Error from "./Error";
 import { Box, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { boxStyle } from "../styles/componentStyles";
+import { boxStyle, fromStyle } from "../styles/componentStyles";
 
 export default function Update(props: { id: number; }): JSX.Element {
     // const eid = useRef<HTMLInputElement>(null);
@@ -86,14 +85,14 @@ export default function Update(props: { id: number; }): JSX.Element {
 
     return (
         <Box sx={boxStyle}>
-            <form onSubmit={handleSubmit} className="form">
+            <Box component='form' onSubmit={handleSubmit} sx={fromStyle}>
                 <Error errorMsg={error}></Error>
                 <TextField required label='Enter Name' inputRef={ename}></TextField>
                 <TextField required label='Enter Designation' inputRef={edesig}></TextField>
                 <TextField required label='Enter Department' inputRef={edept}></TextField>
                 <TextField required label='Enter Salary' type="number" inputRef={esal}></TextField>
                 <Button type='submit' variant='contained'>Update</Button>
-            </form>
+            </Box>
         </Box>
     );
 }

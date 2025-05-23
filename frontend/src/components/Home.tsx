@@ -2,9 +2,8 @@ import { JSX, useEffect, useState } from "react"
 import { EmpObjectType } from "../types/employee.types"
 import EmployeeObject from "../services/employeeService"
 import { Add } from "@mui/icons-material"
-import '../styles/components.styles.css'
-import { boxStyle, tableContainerStyle } from "../styles/componentStyles"
-import { Box, Button, Fab, Paper, TableContainer } from "@mui/material"
+import { boxStyle, navBarStyles, tableContainerStyle } from "../styles/componentStyles"
+import { Box, Button, Fab, Paper, TableContainer, Typography } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
 import EmployeeTable from "./EmployeeTable"
 import Dialogs from "./Dialogs"
@@ -98,14 +97,15 @@ export default function Home(): JSX.Element {
 
     return (
         <Box sx={boxStyle}>
-            <div className="nav-class">
+            <Box sx={navBarStyles}>
                 <Link to='/home'><h2>Employees</h2></Link>
 
                 <Button onClick={handleLogOut} sx={{ color: 'white' }}>logout</Button>
-            </div>
-            <p>
+            </Box>
+
+            <Typography component='p' sx={{margin:'1%'}}>
                 <Fab onClick={handleAddEmployee}><Add /></Fab>
-            </p>
+            </Typography>
 
             <TableContainer sx={tableContainerStyle} component={Paper}>
                 {
