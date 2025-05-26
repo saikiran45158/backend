@@ -1,5 +1,4 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-//import '../styles/components.styles.css'
 import { useRef, useState } from "react";
 import { userType } from "../types/user.types";
 import { signup } from "../services/signupService";
@@ -15,7 +14,6 @@ export default function SignUp() {
     async function handleSubmit(eve: { preventDefault: () => void; }) {
         eve.preventDefault()
         const data: userType = { user: userRef.current?.value as string, password: passRef.current?.value as string }
-        // console.log(data)
         if(data.password.length<6){
             setError('password has minimum 6 characters')
             return window.setTimeout(()=>setError(''),4000)
@@ -36,7 +34,7 @@ export default function SignUp() {
         <Box sx={LoginStyle}>
             <Box>
                 <Box component='form' onSubmit={handleSubmit} sx={fromStyle}>
-                    <Typography component='h2'>SignUp</Typography>
+                    <Typography variant="h5"  sx={{fontWeight: "bold"}}>SignUp</Typography>
                     <Error errorMsg={error} />
                     <TextField inputRef={userRef} type='text' required label='Enter username'></TextField>
                     <TextField inputRef={passRef} type='password' required label='Enter password'></TextField>

@@ -15,7 +15,6 @@ describe('checking Protected Component', () => {
                 </Route>
             </Routes>
         </MemoryRouter>)
-        // screen.debug()
         const element = screen.getByText(/dummyComponent/i)
         expect(element).toBeInTheDocument()
     })
@@ -30,6 +29,5 @@ describe('checking Protected Component', () => {
         </MemoryRouter>)
         const element = screen.queryByText(/dummyComponent/i)
         expect(element).not.toBeInTheDocument()
-        // screen.debug()
     })
 })

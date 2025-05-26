@@ -17,7 +17,7 @@ export default function Home(): JSX.Element {
     const [deleteDialog, setDeleteDialog] = useState(false)
     const [deleteId, setDeleteId] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
-    const employeesPerPage = 5
+    const employeesPerPage:number = Number(process.env.EMPLOYEES_PER_PAGE)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,9 +32,6 @@ export default function Home(): JSX.Element {
                     if (errMsg.localeCompare('session expired please relogin') === 0) {
                         window.alert(errMsg)
                         navigate('/')
-                    }
-                    else{
-                        window.alert(errMsg);
                     }
                 }
             }
@@ -103,7 +100,7 @@ export default function Home(): JSX.Element {
                 <Button onClick={handleLogOut} sx={{ color: 'white' }}>logout</Button>
             </Box>
 
-            <Typography component='p' sx={{margin:'1%'}}>
+            <Typography component='p' sx={{marginTop:'3%'}}>
                 <Fab onClick={handleAddEmployee}><Add /></Fab>
             </Typography>
 

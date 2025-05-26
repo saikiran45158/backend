@@ -13,7 +13,6 @@ describe('testing UpdateEmployee Component', () => {
                 <Update id={0} />
             </MemoryRouter>
         )
-        //screen.debug()
         const nameInput = screen.getByLabelText(/name/i)
         const desigInput = screen.getByLabelText(/desig/i)
         const deptInput = screen.getByLabelText(/depart/i)
@@ -39,11 +38,10 @@ describe('testing UpdateEmployee Component', () => {
                 <Update id={data.EmpId} />
             </MemoryRouter>
         )
-        // screen.debug()
         const mockFetchUser = vi.spyOn(EmployeeObject, 'editEmployee')
         mockFetchUser.mockImplementation((id, data) => {
             console.log('updated successful', id, data)
-            return Promise.resolve()
+            return Promise.resolve("")
         })
 
         const user = userEvent.setup()

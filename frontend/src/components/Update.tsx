@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { boxStyle, fromStyle } from "../styles/componentStyles";
 
 export default function Update(props: { id: number; }): JSX.Element {
-    // const eid = useRef<HTMLInputElement>(null);
     const [error, setError] = useState('')
     const ename = useRef<HTMLInputElement>(null);
     const edesig = useRef<HTMLInputElement>(null);
@@ -16,10 +15,8 @@ export default function Update(props: { id: number; }): JSX.Element {
     const esal = useRef<HTMLInputElement>(null);
     const navigate=useNavigate()
     async function fetchUserData(id: number) {
-        //console.log(id)
         try{
         const EmpData: Partial<EmpObjectType> = await EmployeeObject.getEmployee(Number(id))
-        //console.log('->', EmpData)
         ename.current!.value = ''
         edesig.current!.value = ''
         edept.current!.value = ''
@@ -32,7 +29,6 @@ export default function Update(props: { id: number; }): JSX.Element {
         catch(err){
             if (typeof err === 'object') {
                 const errMsg = (err as { message: string }).message
-               // console.log('-->',errMsg)
                 if(errMsg.localeCompare('session expired please relogin')===0){
                     window.alert(errMsg)
                     navigate('/')
@@ -63,24 +59,21 @@ export default function Update(props: { id: number; }): JSX.Element {
             EmpDept: edept.current.value,
             EmpSal: Number(esal.current.value)
         };
-
-       // console.log(data);
        try{
         await EmployeeObject.editEmployee(data.EmpId, data)
        }
        catch(err){
         if (typeof err === 'object') {
             const errMsg = (err as { message: string }).message
-           // console.log('-->',errMsg)
             if(errMsg.localeCompare('session expired please relogin')===0){
                 window.alert(errMsg)
                 navigate('/')
             }
             else
                 setError(errMsg);
+            window.setTimeout(() => setError(''), 4000)
         }
        }
-
     }
 
     return (

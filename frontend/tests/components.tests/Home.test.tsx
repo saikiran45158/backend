@@ -2,7 +2,6 @@ import { render,screen, waitFor } from "@testing-library/react";
 import { MemoryRouter} from "react-router-dom";
 import { describe,it,expect, vi } from "vitest";
 import Home from "../../src/components/Home";
-//import userEvent from "@testing-library/user-event";
 import EmployeeObject from "../../src/services/employeeService";
 import { EmpObjectType } from "../../src/types/employee.types";
 import axios from "axios";
@@ -15,7 +14,6 @@ describe('testing home component',()=>{
                 <Home/>
             </MemoryRouter>
         )
-        //screen.debug()
         const employeesText=screen.getByRole('link',{name:/employees/i})
         const logoutButton=screen.getByRole('button',{name:/logout/i})
         const headingMessage=screen.getByRole('heading',{name:/no employees found/i})
@@ -24,8 +22,6 @@ describe('testing home component',()=>{
         expect(headingMessage).toBeInTheDocument()
     })
     it('testing home component functionality',async ()=>{
-        //const user=userEvent.setup()
-       // const mockLocalStorageClear=vi.spyOn(localStorage,'clear')
         const mockAlert=vi.spyOn(window,'alert')
         const mockGetEmployees=vi.spyOn(EmployeeObject,'getEmployees')
         const mockAxiosGet=vi.spyOn(axios,'post')
@@ -56,7 +52,6 @@ describe('testing home component',()=>{
                 <Home/>
             </MemoryRouter>
         )
-       // const logoutButton=screen.getByRole('button',{name:/logout/i}) 
         await waitFor(()=>{
             expect(mockGetEmployees).toHaveBeenCalledTimes(1)
         })

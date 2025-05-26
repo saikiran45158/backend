@@ -13,7 +13,6 @@ describe('testing signup ', () => {
             <MemoryRouter>
                 <SignUp />
             </MemoryRouter>)
-        // screen.debug()
         const userInput = screen.getByLabelText(/user/i)
         const passwordInput = screen.getByLabelText(/password/i)
         const buttons = screen.getAllByRole('button')
@@ -30,13 +29,12 @@ describe('testing signup ', () => {
             <MemoryRouter>
                 <SignUp />
             </MemoryRouter>)
-        //screen.debug()
         const user = userEvent.setup()
         const mockSignUp = vi.spyOn(signServObj, 'signup')
         const mockWindow = vi.spyOn(window, 'alert')
         mockSignUp.mockImplementation(async (data: userType) => {
             console.log('signup sucessful with', data)
-            return Promise.resolve()
+            return Promise.resolve(true)
         })
         mockWindow.mockImplementation(() => {
             console.log('redirecting to login page')

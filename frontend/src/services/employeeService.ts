@@ -19,7 +19,6 @@ class Employee {
         catch (err) {
             if (err instanceof AxiosError) {
                 if (err.response?.status === 409) {
-                    //console.log('->', err.response?.status)
                     throw Error('id already exist')
                 }
                 else if (err.response?.status === 401)

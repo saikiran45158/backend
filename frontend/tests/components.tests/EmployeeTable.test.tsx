@@ -31,7 +31,6 @@ describe('checking employee table', () => {
             }
         ]
         render(<EmployeeTable handleEdit={handleDemo} handleDelete={handleDemo} employees={EmployeeArray} />)
-       // screen.debug()
         EmployeeArray.forEach((ele) => {
             const empName = screen.getByText(ele.EmpName)
             expect(empName).toBeInTheDocument()

@@ -10,7 +10,7 @@ interface EmployeeTableProps {
 }
 function EmployeeTable({ handleEdit, handleDelete, employees }: EmployeeTableProps) {
     if(employees.length===0)
-        return (<h3>No Employees found , Add Some Employees or go to previous page</h3>)
+        return (<h3>No Employees found , Add Some Employees or go to the previous page</h3>)
     return (
         <>
             <Table sx={TableStyle}>
