@@ -24,7 +24,6 @@ export default function SignUp() {
             navigate('/')
         }
         catch (err) {
-            console.log(err)
             if (typeof err === 'object')
                 setError((err as { message: string }).message)
         }
@@ -37,7 +36,7 @@ export default function SignUp() {
                     <Typography variant="h5"  sx={{fontWeight: "bold"}}>SignUp</Typography>
                     <Error errorMsg={error} />
                     <TextField inputRef={userRef} type='text' required label='Enter username'></TextField>
-                    <TextField inputRef={passRef} type='password' required label='Enter password'></TextField>
+                    <TextField inputRef={passRef} autoComplete='current-password' type='password' required label='Enter password'></TextField>
                     <Button variant='contained' type='submit'>Sign Up</Button>
                     <Typography component='span'>Have an account ?<Button onClick={() => navigate('/')}  variant='text'>login</Button></Typography>
                 </Box>

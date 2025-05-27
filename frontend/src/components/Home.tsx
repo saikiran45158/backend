@@ -8,16 +8,17 @@ import { Link, useNavigate } from "react-router-dom"
 import EmployeeTable from "./EmployeeTable"
 import Dialogs from "./Dialogs"
 import MyPagination from "./MyPagination"
+import Search from "./Search"
 
 export default function Home(): JSX.Element {
     const [UpdateDialog, setUpdateDialog] = useState(false)
     const [AddDialog, setAddDialog] = useState(false)
-    const [editId, setEditId] = useState(0)   
+    const [editId, setEditId] = useState(0)
     const [employees, setEmployees] = useState<EmpObjectType[]>([])
     const [deleteDialog, setDeleteDialog] = useState(false)
     const [deleteId, setDeleteId] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
-    const employeesPerPage:number = Number(process.env.EMPLOYEES_PER_PAGE)
+    const employeesPerPage: number = Number(process.env.EMPLOYEES_PER_PAGE)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,12 +38,11 @@ export default function Home(): JSX.Element {
             }
         }
         allEmployees()
-
-    }, [UpdateDialog, AddDialog, deleteId, currentPage, employeesPerPage,navigate])
+    }, [UpdateDialog, AddDialog, deleteId, currentPage, navigate])
 
     const endIndex: number = employeesPerPage * currentPage
     const startIndex: number = endIndex - employeesPerPage
-    const currentEmployees = employees.slice(startIndex, endIndex)
+    const currentEmployees: EmpObjectType[] = employees.slice(startIndex, endIndex)
 
     function handleEdit(id: number): void {
         setUpdateDialog(true)
@@ -87,7 +87,6 @@ export default function Home(): JSX.Element {
     }
 
     function handleLogOut(): void {
-        console.log()
         localStorage.clear();
         navigate('/');
     }
@@ -96,18 +95,22 @@ export default function Home(): JSX.Element {
         <Box sx={boxStyle}>
             <Box sx={navBarStyles}>
                 <Link to='/home'><h2>Employees</h2></Link>
-
                 <Button onClick={handleLogOut} sx={{ color: 'white' }}>logout</Button>
             </Box>
 
-            <Typography component='p' sx={{marginTop:'3%'}}>
-                <Fab onClick={handleAddEmployee}><Add /></Fab>
-            </Typography>
+            <Box sx={{ marginTop: '3%', display: 'flex', flexDirection: 'row', gap: '30%' }}>
+
+                <Typography component='p' >
+                    <Fab onClick={handleAddEmployee}><Add /></Fab>
+                </Typography>
+                <Search setEmployees={setEmployees} />
+
+            </Box>
 
             <TableContainer sx={tableContainerStyle} component={Paper}>
                 {
 
-                    employees.length === 0 ? (<h3>No Employees Found ,Add Some Employees</h3>) : (<EmployeeTable employees={currentEmployees} handleEdit={handleEdit} handleDelete={handleDelete} />)
+                    employees.length === 0 ? (<h3>No Employees Found </h3>) : (<EmployeeTable currentEmployees={currentEmployees} handleEdit={handleEdit} handleDelete={handleDelete} />)
 
                 }
                 <MyPagination employeesSize={employees.length} currentPage={currentPage} setCurrentPage={setCurrentPage} />

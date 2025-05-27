@@ -1,5 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { EmpObjectType, MsgType } from "../types/employee.types";
+import store  from "../store/store";
+import { setEmployees } from "../store/slice";
 
 class Employee {
     async addEmployee(EmpData: EmpObjectType) {
@@ -52,6 +54,7 @@ class Employee {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             const result: EmpObjectType[] = receivedResponse.data
+            store.dispatch(setEmployees(result))
             return result
         }
         catch (err) {
