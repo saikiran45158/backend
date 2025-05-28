@@ -5,6 +5,7 @@ import EmployeeObject from "../services/employeeService";
 import { Box, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { fromStyle } from "../styles/componentStyles";
+// import {useErrorHandler} from 'react-error-boundary'
 
 export default function AddEmp(): JSX.Element {
     const [error, setError] = useState('') 
@@ -43,8 +44,9 @@ export default function AddEmp(): JSX.Element {
                     window.alert(errMsg)
                     navigate('/')
                 }
-                else
+                else{
                     setError(errMsg);
+                }
             }
             window.setTimeout(()=>setError(''),4000)
         }

@@ -14,7 +14,7 @@ export const tableContainerStyle = {
     alignItems: 'center',
     marginTop: '2%'
 }
-
+export const searchBoxStyles = { marginTop: '3%', display: 'flex', flexDirection: 'row', gap: '30%' }
 export const navBarStyles = {
     width: "100%",
     height: "40px",

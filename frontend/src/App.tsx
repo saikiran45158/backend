@@ -6,6 +6,7 @@ import Protected from './components/Protected';
 import SignUp from './components/SignUp';
 import NotFound from './components/NotFound';
 
+
 export default function App() {
   const isLoggedIn:string|null=localStorage.getItem('isLoggedIn')
   return (
