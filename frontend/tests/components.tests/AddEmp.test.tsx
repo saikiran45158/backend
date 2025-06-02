@@ -13,7 +13,6 @@ describe('add element', () => {
                 <AddEmp />
             </MemoryRouter>
         )
-        // screen.debug()
         const idInput = screen.getByLabelText(/enter id/i)
         const nameInput = screen.getByLabelText(/enter name/i)
         const desigInput = screen.getByLabelText(/enter desig/i)
@@ -34,7 +33,6 @@ describe('add element', () => {
                 <AddEmp />
             </MemoryRouter>
         )
-        //screen.debug()
         const mockAddEmployee = vi.spyOn(EmployeeObject, 'addEmployee')
         mockAddEmployee.mockReturnThis()
         const user = userEvent.setup()

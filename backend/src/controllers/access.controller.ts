@@ -8,6 +8,7 @@ export function token_checker(req: Request, res: Response, next: NextFunction): 
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1]
     }
+
     else {
         res.status(404).send({ err: 'error occured' })
         return;

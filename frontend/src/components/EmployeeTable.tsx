@@ -6,11 +6,11 @@ import { TableCellStyle, TableHeadStyle, TableStyle } from "../styles/componentS
 interface EmployeeTableProps {
     handleEdit: (id: number) => void,
     handleDelete: (id: number) => void,
-    employees: EmpObjectType[]
+    currentEmployees:EmpObjectType[]
 }
-function EmployeeTable({ handleEdit, handleDelete, employees }: EmployeeTableProps) {
-    if(employees.length===0)
-        return (<h3>No Employees found , Add Some Employees or go to previous page</h3>)
+function EmployeeTable({ handleEdit,currentEmployees, handleDelete}: EmployeeTableProps) {
+    if(currentEmployees.length===0)
+        return (<h3>No Employees found , Add Some Employees or go to the previous page</h3>)
     return (
         <>
             <Table sx={TableStyle}>
@@ -26,7 +26,7 @@ function EmployeeTable({ handleEdit, handleDelete, employees }: EmployeeTablePro
                 </TableHead>
                 <TableBody >
                     {
-                        employees?.map((employee, index) => (
+                        currentEmployees?.map((employee, index) => (
                             <TableRow key={index} >
                                 <TableCell>{employee.EmpId}</TableCell>
                                 <TableCell>{employee.EmpName}</TableCell>

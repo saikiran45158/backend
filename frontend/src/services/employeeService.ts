@@ -1,5 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { EmpObjectType, MsgType } from "../types/employee.types";
+import store  from "../store/store";
+import { setEmployees } from "../store/slice";
 
 class Employee {
     async addEmployee(EmpData: EmpObjectType) {
@@ -19,7 +21,6 @@ class Employee {
         catch (err) {
             if (err instanceof AxiosError) {
                 if (err.response?.status === 409) {
-                    //console.log('->', err.response?.status)
                     throw Error('id already exist')
                 }
                 else if (err.response?.status === 401)
@@ -53,6 +54,7 @@ class Employee {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             const result: EmpObjectType[] = receivedResponse.data
+            store.dispatch(setEmployees(result))
             return result
         }
         catch (err) {

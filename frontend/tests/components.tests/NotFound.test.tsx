@@ -9,7 +9,6 @@ describe('checking NotFound component', () => {
             <MemoryRouter>
                 <NotFound />
             </MemoryRouter>)
-        //screen.debug()
         const h2 = screen.getByRole('heading')
         const para = screen.getAllByRole('paragraph')
         expect(h2).toBeInTheDocument()

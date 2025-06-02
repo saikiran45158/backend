@@ -13,7 +13,6 @@ describe('testing Login Component', () => {
                 <Login />
             </MemoryRouter>
         )
-        //screen.debug()
         const userInput = screen.getByLabelText(/user/i)
         const passwordInput = screen.getByLabelText(/password/i)
         const buttons = screen.getAllByRole('button')
@@ -31,11 +30,7 @@ describe('testing Login Component', () => {
                 <Login />
             </MemoryRouter>
         )
-        //screen.debug()
         const mockAuth = vi.spyOn(authModule, 'default')
-        // mockAuth.mockImplementation(()=>{
-        //     return Promise.reject({err:'error'})
-        // })
         mockAuth.mockImplementation((data: userType) => {
             console.log('authenticate function called', data)
             return Promise.resolve(true)

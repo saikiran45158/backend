@@ -9,7 +9,6 @@ function demoFunction(page: number) {
 describe('checking Mypagination Component', () => {
     it('checking elements of MyPagination when employeesSize is zero', () => {
         render(<MyPagination employeesSize={0} currentPage={0} setCurrentPage={demoFunction} />)
-        // screen.debug()
         const buttons = screen.queryAllByRole('button')
         expect(buttons.length).toBe(0)
     })
@@ -18,7 +17,6 @@ describe('checking Mypagination Component', () => {
         const employeesSize = 7
         const currentPage = 1
         render(<MyPagination employeesSize={employeesSize} currentPage={currentPage} setCurrentPage={demoFunction} />)
-        // screen.debug()
         const buttons = screen.queryAllByRole('button')
         expect(buttons.length).toBe(Math.ceil(employeesSize / 5))
     })
@@ -30,7 +28,6 @@ describe('checking Mypagination Component', () => {
         const employees = 12
         const currentPage = 1
         render(<MyPagination employeesSize={employees} currentPage={currentPage} setCurrentPage={setCurrentPage} />)
-        // screen.debug()
         const buttons = screen.getAllByRole('button')
         const user = userEvent.setup()
         for (let i = 0; i < buttons.length; i++) {
