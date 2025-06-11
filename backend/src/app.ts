@@ -20,6 +20,7 @@ app.use(cors({
 app.use(express.json())
 app.post('/login', loginUser)
 app.post('/signup',signup)
+
 app.get('/', token_checker, getEmployees)
 app.use(token_checker)
 app.post('/add', addEmployee)
