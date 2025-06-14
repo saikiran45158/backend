@@ -12,10 +12,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 const app: Express = express()
 
-app.use(cors({
-    origin: process.env.ORIGIN,
-    credentials: true
-}))
+app.use(cors())
 
 app.use(express.json())
 app.post('/login', loginUser)
