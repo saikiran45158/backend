@@ -13,9 +13,13 @@ dotenv.config()
 const app: Express = express()
 
 app.use(cors({
-    origin:process.env.ORIGIN
-}
-))
+    origin: 'https://ems18.netlify.app',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  
+  app.options('*', cors());
+  
 
 console.log(process.env.ORIGIN)
 
