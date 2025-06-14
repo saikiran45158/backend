@@ -17,6 +17,7 @@ export async function signup(req: Request, res: Response) {
             return;
         }
         catch (err) {
+            console.log(err)
             if ((err as { code: string }).code === '23505'){
                 res.status(409).send({ errMsg: "user alredy exist" })
                 return;

@@ -34,6 +34,7 @@ export async function loginUser(req: Request, res: Response) {
         }
     }
     catch(err) {
+        console.log(err)
         res.status(500).send({ err: 'error occured' })
         return;
     }
