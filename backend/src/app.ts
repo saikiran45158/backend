@@ -17,6 +17,8 @@ app.use(cors({
 }
 ))
 
+console.log(process.env.ORIGIN)
+
 app.use(express.json())
 app.post('/login', loginUser)
 app.post('/signup',signup)
