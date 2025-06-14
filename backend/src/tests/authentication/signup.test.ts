@@ -14,7 +14,7 @@ describe('checking signup function', () => {
             }),
         }))
     } as unknown as Response
-    const mockExecute = jest.spyOn(conn, 'execute')
+    const mockExecute = jest.spyOn(conn, 'query')
     afterEach(()=>{
         req.body={}
     })

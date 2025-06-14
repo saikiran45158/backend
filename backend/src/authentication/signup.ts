@@ -12,16 +12,17 @@ export async function signup(req: Request, res: Response) {
         try {
             const rounds = 9
             const hashedpass = await bcrypt.hash(password.toString(), rounds)
-            await pool.execute('insert into users (userName,password) values(?,?)', [user, hashedpass])
+            await pool.query('insert into users (name,password) values($1,$2)', [user, hashedpass])
             res.status(201).send({ msg: 'account created successfully' })
             return;
         }
         catch (err) {
-            if ((err as { code: string }).code === 'ER_DUP_ENTRY'){
+            if ((err as { code: string }).code === '23505'){
                 res.status(409).send({ errMsg: "user alredy exist" })
                 return;
             }
             else {
+                console.log((err as {message:string}).message)
                 res.status(500).send({ errMsg: 'hashing error' })
                 return;
             }
